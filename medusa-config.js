@@ -5,8 +5,14 @@ const ADMIN_CORS = process.env.ADMIN_CORS || "http://localhost:7000,http://local
 const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
 
 // Database URL (here we use a local database called medusa-development)
-const DATABASE_URL =
-  process.env.DATABASE_URL || "postgres://localhost/medusa-store";
+// const DATABASE_URL = process.env.DATABASE_URL || "postgres://localhost/medusa-store";
+const DB_USERNAME = process.env.DB_USERNAME;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_HOST = process.env.DB_HOST;
+const DB_PORT = process.env.DB_PORT;
+const DB_DATABASE = process.env.DB_DATABASE;
+
+const DATABASE_URL = `postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}`;
 
 // Medusa uses Redis, so this needs configuration as well
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
@@ -32,14 +38,12 @@ const plugins = [
 
 module.exports = {
   projectConfig: {
-    // redis_url: REDIS_URL,
-    // For more production-like environment install PostgresQL
-    // database_url: DATABASE_URL,
-    // database_type: "postgres",
-    database_database: "./medusa-db.sql",
-    database_type: "sqlite",
+    redis_url: REDIS_URL,
+    database_url: DATABASE_URL,
+    database_type: "postgres",
     store_cors: STORE_CORS,
     admin_cors: ADMIN_CORS,
+    database_extra: { ssl: { rejectUnauthorized: false } }
   },
   plugins,
 };
