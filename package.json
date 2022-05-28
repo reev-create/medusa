@@ -5,9 +5,9 @@
   "author": "Sebastian Rindom <skrindom@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "seed": "medusa seed -f ./data/seed.json",
-    "build": "babel src -d dist --extensions \".ts,.js\"",
-    "start": "medusa develop"
+    "serve": "medusa start",
+    "start": "medusa migrations run && medusa develop",
+    "build": "babel src -d dist --extensions \".ts,.js\""
   },
   "dependencies": {
     "@medusajs/medusa": "1.2.1",
@@ -31,5 +31,8 @@
     "@babel/core": "^7.14.3",
     "@babel/preset-typescript": "^7.14.5",
     "babel-preset-medusa-package": "^1.1.13"
+  },
+  "engines": {
+      "node": "14.x"
   }
 }
